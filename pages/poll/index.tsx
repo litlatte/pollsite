@@ -71,11 +71,12 @@ export default function PollPage({ token }: any) {
         {answers.map((ans, i) => {
           return (
             <div className="flex my-2 items-center mx-auto w-fit">
-              <div className="rounded-full mr-2 shadow bg-white w-8 h-8 flex items-center justify-center">
+              <div className={`rounded-full mr-2 shadow ${i===answers.length-1? 'bg-gray-200':'bg-white'} w-8 h-8 flex items-center justify-center`}>
                 {i+1}
               </div>{" "}
               <input
                 placeholder={`Answer ${i + 1}`}
+                className={`${i===answers.length-1? 'bg-gray-200':'bg-white'} p-2 w-72 rounded-xl shadow`}
                 value={ans.answer.toString()}
                 onChange={(e) => {
                   setAnswers([
@@ -84,20 +85,11 @@ export default function PollPage({ token }: any) {
                     ...answers.slice(i + 1),
                   ])
                 }}
-                className="p-2 w-72 rounded-xl shadow"
               />
             </div>
           )
         })}
       </div>
-      <button
-        onClick={() => {
-          setAnswers([...answers, { answer: "" }])
-        }}
-        className="bg-indigo-300 hover:opacity-80 hover:scale-110 transition duration-300 shadow p-3 rounded-lg mt-4"
-      >
-        + Add Answer
-      </button>
       {errorMessage && (
         <ErrorMessageCard className="mt-3">{errorMessage}</ErrorMessageCard>
       )}
