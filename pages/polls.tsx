@@ -7,7 +7,7 @@ export default function PollsPage({ token, polls }: any) {
       <h1 className="text-5xl text-indigo-700 text-center pb-10 pt-16">
         Your Polls
       </h1>
-      <div className="h-80 w-fit px-8 mx-auto grow overflow-auto">
+      <div className="h-80 w-fit px-8 mx-auto grow overflow-x-hidden overflow-y-auto">
         {(!polls || !polls.length) && (
           <div className="text-center"> You have no polls yet. </div>
         )}
