@@ -22,7 +22,7 @@ export default function PollsPage({ token, polls }: any) {
         </div>
         
         <Link href="/poll">
-          <a className="bg-indigo-500 hover:opacity-80 hover:scale-110 transition duration-300 text-white p-4 rounded-xl shadow">
+          <a className=" mx-auto bg-indigo-500 hover:opacity-80 hover:scale-110 transition duration-300 text-white p-4 rounded-xl shadow">
             Create Poll
           </a>
         </Link>

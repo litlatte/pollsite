@@ -39,7 +39,7 @@ export default function PollPage({ poll }: any) {
                 {op.votes}
               </div>
               <div className="w-fit px-1 ml-2 h-8 min-w-8 flex items-center justify-center bg-black/20 shadow-full rounded">
-                {Math.floor((op.votes / poll.totalVotes) * 100)}%
+                {Math.floor((op.votes / poll.totalVotes) * 100) || 0}%
               </div>
             </div>
           ))}
