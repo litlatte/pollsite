@@ -49,9 +49,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           })
         : [],
     }
-    let ipAddress: string = (req.headers["x-forwarded-for"] || req.connection.remoteAddress || req.socket.remoteAddress || "Already voted").toString();
+    let ipAddress: string = (req.headers["x-forwarded-for"] || req.socket.remoteAddress || "Already voted").toString();
     // Check if user has already voted
-    console.log(req.headers["x-forwarded-for"], ipAddress, answers)
+    console.log(req.headers["x-real-ip"], req.headers["x-forwarded-for"], ipAddress, answers)
     let selectedAnswer = answers.find((answer: any) => {
       return answer.ipAddress == ipAddress;
     });
