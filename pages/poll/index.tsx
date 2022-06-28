@@ -8,7 +8,7 @@ export default function PollPage({ token }: any) {
     {
       answer: String
     }[]
-  >([{ answer: "" }, { answer: "" }])
+  >([{ answer: "" }])
   let [errorMessage, setErrorMessage] = useState("")
   useEffect(() => {
     if(answers[answers.length-1].answer !== ""){
