@@ -18,6 +18,11 @@ export default function IndexPage() {
             Create Poll
           </a>
         </Link>}
+        {session&&<Link href="/polls">
+          <a className="bg-indigo-500 hover:opacity-80 hover:scale-110 transition duration-300 text-white p-4 rounded-xl shadow">
+            My Polls
+          </a>
+        </Link>}
         {!session && <Link href="/api/auth/signin">
           <a className="bg-indigo-500 hover:opacity-80 hover:scale-110 transition duration-300 text-white p-4 rounded-xl shadow">
             Log In
