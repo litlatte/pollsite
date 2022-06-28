@@ -133,7 +133,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Get the current url and get the only the website
   let res = await fetch(
     `${process.env.NEXTAUTH_URL}/api/poll/` + context.query.slug,
-    {}
+    {
+        headers: {
+            "Content-Type": "application/json",
+            'x-internal-pollsite-ip': context.req.headers['x-forwarded-for']?.toString() || '',
+        }
+    }
   )
   if (!res) {
     return { props: {} }
