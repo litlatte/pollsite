@@ -11,15 +11,18 @@ export default function PollPage({ token }: any) {
   >([{ answer: "" }])
   let [errorMessage, setErrorMessage] = useState("")
   useEffect(() => {
-      if (answers.length> 1 && answers[answers.length - 2].answer !== "") {
-        setAnswers([...answers, { answer: "" }])
-      } else {
-        let sliceTo = answers.length-1
-        while ( sliceTo > 2  && answers[sliceTo -1].answer === "") {
-          sliceTo--
-        }
-        setAnswers(answers.slice(0, sliceTo))
+    if (
+      answers[answers.length - 1].answer !== "" &&
+      (answers.length > 1 ? answers[answers.length - 2].answer === "" : true)
+    ) {
+      setAnswers([...answers, { answer: "" }])
+    } else {
+      let sliceTo = answers.length - 1
+      while (sliceTo > 2 && answers[sliceTo - 1].answer === "") {
+        sliceTo--
       }
+      setAnswers(answers.slice(0, sliceTo))
+    }
   }, [answers])
 
   async function handleSubmit() {
