@@ -1,6 +1,5 @@
 import { getToken } from "next-auth/jwt"
 import Link from "next/link"
-import poll from "./api/poll"
 
 export default function PollsPage({ token, polls }: any) {
   return (

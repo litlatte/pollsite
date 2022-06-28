@@ -1,4 +1,8 @@
-export default function PollPage({ poll }: any) {
+import Image from "next/image"
+import { useState } from "react"
+import { SuccessfulMessageCard } from "../../../components/misc/cards"
+
+export default function PollPage({ poll, url }: any) {
   if (!poll) return <div>Unknown Error</div>
   let mostVotedAnswer = poll.options.reduce((acc: any, ans: any) => {
     if (ans.votes > acc.votes) return ans
@@ -8,6 +12,7 @@ export default function PollPage({ poll }: any) {
     if (ans.votes < acc.votes) return ans
     return acc
   })
+  let [textCopied, setTextCopied] = useState(false);
   return (
     <div className="w-full bg-indigo-50 h-full flex flex-col items-center justify-center">
       <h1 className="text-5xl mb-8 font-bold text-center text-indigo-600">
@@ -45,6 +50,28 @@ export default function PollPage({ poll }: any) {
           ))}
         </div>
       </div>
+      
+      <div className="flex mt-2 items-center justify-center p-2 bg-white mt-3 rounded-xl shadow">
+        <div className="mr-2 max-w-[250px] text-indigo-900 truncate">
+          {url}
+        </div>
+        <Image
+          src={"https://cdn-icons-png.flaticon.com/512/2038/2038838.png"}
+          width={20}
+          height={20}
+          className="hover:cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(url)
+            setTextCopied(true)
+          }}
+        />
+        </div>
+        {textCopied && (
+          <SuccessfulMessageCard className="mt-3">
+            Link copied to clipboard
+          </SuccessfulMessageCard>)}
+
+
     </div>
   )
 }
@@ -59,6 +86,6 @@ export async function getServerSideProps(context: any) {
   if (res.status !== 200) {
     return { props: {} }
   } else {
-    return { props: { poll: data } }
+    return { props: {url: `${process.env.NEXTAUTH_URL}/poll/${context.query.slug}`, poll: data } }
   }
 }
