@@ -19,7 +19,7 @@ export default function IndexPage() {
           </a>
         </Link>}
         {session&&<Link href="/polls">
-          <a className="mt-8 bg-indigo-500 hover:opacity-80 hover:scale-110 transition duration-300 text-white p-4 rounded-xl shadow">
+          <a className="mt-8 text-indigo-700 hover:opacity-80">
             My Polls
           </a>
         </Link>}
