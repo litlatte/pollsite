@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(401).json({message: "Unauthorized"})
       return
     }
-    let userEmail: string = `${token.provider}:${token.email}` || ""
+    let userEmail: string = `${token.provider}${token.email}` || ""
     let pollData: {
       question: string
       options: string[]
