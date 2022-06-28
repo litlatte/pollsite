@@ -52,7 +52,7 @@ export default function PollAnswerPage({poll,slug}:any){
             {isLoading && <div className="text-center text-indigo-800">Submitting...</div>}
             {errorMessage&&<ErrorMessageCard className="my-3">{errorMessage}</ErrorMessageCard>}
             <button onClick={handleSubmit} disabled={selectedOption==null || isLoading} className={`${selectedOption==null?'opacity-40':'hover:scale-105 hover:opacity-80'} transition duration-300 bg-indigo-600 p-4 rounded-lg py-3  text-white`}>Submit</button>
-            <Link href="./results"><a className="mt-4 p-5 bg-orange-500 hover:opacity-80 py-3 hover:scale-110 transition duration-300 text-white rounded-lg text-center">Results</a></Link>
+            <Link href={`/poll/${slug}/results`}><a className="mt-4 p-5 bg-orange-500 hover:opacity-80 py-3 hover:scale-110 transition duration-300 text-white rounded-lg text-center">Results</a></Link>
             </>}
         </div>
 }
