@@ -10,6 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps.session} refetchInterval={0}>
       <Head>
         <title>Pull Poll</title>
+        <link rel="icon" href="/logo.png" />
       </Head>
       <Component {...pageProps} />
     </SessionProvider>
