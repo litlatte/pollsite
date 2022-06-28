@@ -13,6 +13,12 @@ export default function PollPage({ token }: any) {
   useEffect(() => {
     if(answers[answers.length-1].answer !== ""){
       setAnswers([...answers, { answer: "" }])
+    }else{
+      let sliceTo = answers.length;
+      while(answers[sliceTo-1].answer === ""){
+        sliceTo--;
+      }
+      setAnswers(answers.slice(0, sliceTo))
     }
   }, [answers]);
 
@@ -76,7 +82,7 @@ export default function PollPage({ token }: any) {
               </div>{" "}
               <input
                 placeholder={`Answer ${i + 1}`}
-                className={`${i===answers.length-1? 'bg-gray-200':'bg-white'} p-2 w-72 rounded-xl shadow`}
+                className={`${(i===answers.length-1)? 'bg-gray-200':'bg-white'} p-2 w-72 rounded-xl shadow`}
                 value={ans.answer.toString()}
                 onChange={(e) => {
                   setAnswers([
