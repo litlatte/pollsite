@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ErrorMessageCard } from "../../components/misc/cards"
 
 export default function PollPage({ token }: any) {
@@ -10,14 +10,26 @@ export default function PollPage({ token }: any) {
     }[]
   >([{ answer: "" }, { answer: "" }])
   let [errorMessage, setErrorMessage] = useState("")
+  useEffect(() => {
+    if(answers[answers.length-1].answer !== ""){
+      setAnswers([...answers, { answer: "" }])
+    }
+  }, [answers]);
+
   async function handleSubmit() {
     if (errorMessage) setErrorMessage("")
     if (!question) {
       setErrorMessage("Question is required")
       return
     }
-    if (answers.some((ans: any) => !ans.answer)) {
+    let slicedAnswers = answers.slice(0, -1);
+    if(slicedAnswers.length < 2){
+      setErrorMessage("At least two answers are required")
+      return;
+    }
+    if (slicedAnswers.some((ans: any) => !ans.answer)) {
       setErrorMessage("Answers Contet is required")
+      return;
     }
     let res = await fetch("/api/poll", {
       method: "POST",
@@ -26,7 +38,7 @@ export default function PollPage({ token }: any) {
       },
       body: JSON.stringify({
         question,
-        options: answers.map((ans: any) => ans.answer),
+        options: slicedAnswers.map((ans: any) => ans.answer),
       }),
     })
     if (!res) {
@@ -60,7 +72,7 @@ export default function PollPage({ token }: any) {
           return (
             <div className="flex my-2 items-center mx-auto w-fit">
               <div className="rounded-full mr-2 shadow bg-white w-8 h-8 flex items-center justify-center">
-                {i}
+                {i+1}
               </div>{" "}
               <input
                 placeholder={`Answer ${i + 1}`}
