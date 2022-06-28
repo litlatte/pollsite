@@ -11,16 +11,17 @@ export default function PollPage({ token }: any) {
   >([{ answer: "" }])
   let [errorMessage, setErrorMessage] = useState("")
   useEffect(() => {
-    if(answers[answers.length-1].answer !== ""){
-      setAnswers([...answers, { answer: "" }])
-    }else{
-      let sliceTo = answers.length;
-      while(answers[sliceTo-1].answer === ""){
-        sliceTo--;
+    if (answers.length)
+      if (answers[answers.length - 1].answer !== "") {
+        setAnswers([...answers, { answer: "" }])
+      } else {
+        let sliceTo = answers.length
+        while (answers[sliceTo - 1].answer === "") {
+          sliceTo--
+        }
+        setAnswers(answers.slice(0, sliceTo))
       }
-      setAnswers(answers.slice(0, sliceTo))
-    }
-  }, [answers]);
+  }, [answers])
 
   async function handleSubmit() {
     if (errorMessage) setErrorMessage("")
@@ -28,14 +29,14 @@ export default function PollPage({ token }: any) {
       setErrorMessage("Question is required")
       return
     }
-    let slicedAnswers = answers.slice(0, -1);
-    if(slicedAnswers.length < 2){
+    let slicedAnswers = answers.slice(0, -1)
+    if (slicedAnswers.length < 2) {
       setErrorMessage("At least two answers are required")
-      return;
+      return
     }
     if (slicedAnswers.some((ans: any) => !ans.answer)) {
       setErrorMessage("Answers Contet is required")
-      return;
+      return
     }
     let res = await fetch("/api/poll", {
       method: "POST",
@@ -77,12 +78,18 @@ export default function PollPage({ token }: any) {
         {answers.map((ans, i) => {
           return (
             <div className="flex my-2 items-center mx-auto w-fit">
-              <div className={`rounded-full mr-2 shadow ${i===answers.length-1? 'bg-gray-200':'bg-white'} w-8 h-8 flex items-center justify-center`}>
-                {i+1}
+              <div
+                className={`rounded-full mr-2 shadow ${
+                  i === answers.length - 1 ? "bg-gray-200" : "bg-white"
+                } w-8 h-8 flex items-center justify-center`}
+              >
+                {i + 1}
               </div>{" "}
               <input
                 placeholder={`Answer ${i + 1}`}
-                className={`${(i===answers.length-1)? 'bg-gray-200':'bg-white'} p-2 w-72 rounded-xl shadow`}
+                className={`${
+                  i === answers.length - 1 ? "bg-gray-200" : "bg-white"
+                } p-2 w-72 rounded-xl shadow`}
                 value={ans.answer.toString()}
                 onChange={(e) => {
                   setAnswers([
