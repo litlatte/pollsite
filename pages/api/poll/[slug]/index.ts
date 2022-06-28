@@ -49,6 +49,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           })
         : [],
     }
+    let ipAddress: string = (req.headers["x-forwarded-for"] || req.connection.remoteAddress || req.socket.remoteAddress || "Already voted").toString();
+    // Check if user has already voted
+    let selectedAnswer = answers.find((answer: any) => {
+      return answer.ipAddress === ipAddress;
+    });
+    if (selectedAnswer) { //@ts-ignore
+      data.selectedAnswer = selectedAnswer.Option.id;
+    }
     data.totalVotes = data.options.reduce((acc: number, curr: any) => {
       return acc + curr.votes
     }, 0)
