@@ -11,7 +11,7 @@ export default function PollPage({ token }: any) {
   >([{ answer: "" }])
   let [errorMessage, setErrorMessage] = useState("")
   useEffect(() => {
-      if (answers[answers.length - 2].answer !== "") {
+      if (answers.length> 1 && answers[answers.length - 2].answer !== "") {
         setAnswers([...answers, { answer: "" }])
       } else {
         let sliceTo = answers.length-1
