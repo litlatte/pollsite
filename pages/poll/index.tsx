@@ -1,4 +1,5 @@
 import { getToken } from "next-auth/jwt"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { ErrorMessageCard } from "../../components/misc/cards"
 
@@ -11,26 +12,28 @@ export default function PollPage({ token }: any) {
   >([{ answer: "" }])
   let [errorMessage, setErrorMessage] = useState("")
   useEffect(() => {
-    if (
-      answers[answers.length - 1].answer !== "" &&
-      (answers.length > 1 ? answers[answers.length - 2].answer === "" : true)
-    ) {
-      setAnswers([...answers, { answer: "" }])
+    if (answers.length === 0) {
+      setAnswers([{ answer: "" }])
     } else {
-      let sliceTo = answers.length - 1
-      while (sliceTo > 2 && answers[sliceTo - 1].answer === "") {
-        sliceTo--
+      if (answers.length == 1 || answers[answers.length - 1].answer !== "") {
+        setAnswers([...answers, { answer: "" }])
+      } else {
+        let sliceTo = answers.length
+        while (sliceTo > 1 && answers[sliceTo - 1].answer === "") {
+          sliceTo--
+        }
+        setAnswers(answers.slice(0, sliceTo + 1))
       }
-      setAnswers(answers.slice(0, sliceTo))
     }
   }, [answers])
-
+  let [showEmpty, setShowEmpty] = useState(false)
   async function handleSubmit() {
     if (errorMessage) setErrorMessage("")
     if (!question) {
       setErrorMessage("Question is required")
       return
     }
+    setShowEmpty(true)
     let slicedAnswers = answers.slice(0, -1)
     if (slicedAnswers.length < 2) {
       setErrorMessage("At least two answers are required")
@@ -76,7 +79,7 @@ export default function PollPage({ token }: any) {
         className=" p-2 w-80 rounded-xl shadow"
       />
       <div className="text-3xl text-center mt-8">Answers</div>
-      <div className="w-fit h-80 grow overflow-y-auto">
+      <div className="w-fit h-80 grow overflow-y-auto px-4">
         {answers.map((ans, i) => {
           return (
             <div className="flex my-2 items-center mx-auto w-fit">
@@ -90,7 +93,7 @@ export default function PollPage({ token }: any) {
               <input
                 placeholder={`Answer ${i + 1}`}
                 className={`${
-                  i === answers.length - 1 ? "bg-gray-200" : "bg-white"
+                  i === answers.length - 1 ? "bg-gray-200" : ((showEmpty && ans.answer=="")?"bg-red-100":"bg-white")
                 } p-2 w-72 rounded-xl shadow`}
                 value={ans.answer.toString()}
                 onChange={(e) => {
@@ -101,6 +104,15 @@ export default function PollPage({ token }: any) {
                   ])
                 }}
               />
+              <div
+                onClick={() => {
+                  if (i >= answers.length - 1) return
+                  setAnswers([...answers.slice(0, i), ...answers.slice(i + 1)])
+                }}
+                className={`${i<answers.length-1?'hover:opacity-80 hover:scale-105':'opacity-0'} ml-2 bg-red-100 rounded-full w-8 h-8 flex items-center justify-center shadow hover:cursor-pointer`}
+              >
+                <Image src="/img/bin.png" height={12} width={12} />
+              </div>
             </div>
           )
         })}
