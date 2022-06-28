@@ -43,7 +43,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt(data: any) {
-      console.log('jwt', data)
+      data.token.provider = data.account.provider || data.token.provider;
       return data.token
     },
   },
