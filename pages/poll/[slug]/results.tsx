@@ -36,7 +36,7 @@ export default function PollPage({ poll, url }: any) {
         <h2 className="text-3xl rounded-xl shadow p-6 py-3 bg-indigo-400 text-white">
           {poll.question}
         </h2>
-        <div className="flex flex-col h-80 grow oveflow-auto">
+        <div className="flex flex-col h-72 grow overflow-auto">
           {poll.options.map((op: any) => (
             <div className={` rounded-xl shadow p-6 py-3 mt-2 ${poll.totalVotes?(op.id === mostVotedAnswer.id)?'bg-green-100':((op.id==leastVotedAnswer.id || op.votes == leastVotedAnswer.votes)?'bg-red-100':'bg-white'):'bg-white'} grid grid-cols-6`}>
               <div className="col-span-4">{op.text}{" "}</div>
