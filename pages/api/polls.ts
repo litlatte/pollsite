@@ -16,7 +16,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return
     }
     let userEmail: string = `${token.provider}:${token.email}` || "";
-    console.log({ userEmail })
     let polls = await prisma.poll.findMany({
       where: {
         userEmail,
