@@ -42,9 +42,9 @@ export const authOptions: NextAuthOptions = {
     colorScheme: "light",
   },
   callbacks: {
-    async jwt({ token }) {
-      token.userRole = "admin"
-      return token
+    async jwt(data: any) {
+      console.log('jwt', data)
+      return data.token
     },
   },
 }
