@@ -16,7 +16,7 @@ export default function PollPage({ token }: any) {
         setAnswers([...answers, { answer: "" }])
       } else {
         let sliceTo = answers.length
-        while (answers[sliceTo - 1].answer === "") {
+        while (answers[sliceTo - 1].answer === "" && sliceTo > 0) {
           sliceTo--
         }
         setAnswers(answers.slice(0, sliceTo))
