@@ -43,7 +43,9 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt(data: any) {
-      if(data.token) data.token.provider = data.account.provider || data.token.provider;
+      if(data.token ) {
+        data.token.provider = data.account?.provider || data.token.provider
+      };
       return data.token
     },
   },
