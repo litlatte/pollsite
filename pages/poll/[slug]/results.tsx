@@ -20,11 +20,11 @@ export default function PollPage({ poll }: any) {
         </div>
         <div className="text-center bg-green-50 p-3 rounded-xl shadow">
           <div className="text-xl font-bold text-green-600">Most Voted</div>
-          <div>{mostVotedAnswer.text} </div>
+          <div>{!poll.totalVotes?mostVotedAnswer.text:'No votes yet'}</div>
         </div>
         <div className="text-center bg-red-50 p-3 rounded-xl shadow">
           <div className="text-xl font-bold text-red-600">Least Voted</div>
-          <div>{leastVotedAnswer.text}</div>
+          <div>{!poll.totalVotes?leastVotedAnswer.text:'No votes yet'}</div>
         </div>
       </div>
       <div className="w-fit h-fit">
@@ -33,7 +33,7 @@ export default function PollPage({ poll }: any) {
         </h2>
         <div className="flex flex-col">
           {poll.options.map((op: any) => (
-            <div className={` rounded-xl shadow p-6 py-3 mt-2 ${op.id === mostVotedAnswer.id?'bg-green-100':((op.id==leastVotedAnswer.id || op.votes == leastVotedAnswer.votes)?'bg-red-100':'bg-white')} grid grid-cols-6`}>
+            <div className={` rounded-xl shadow p-6 py-3 mt-2 ${!poll.totalVotes?(op.id === mostVotedAnswer.id)?'bg-green-100':((op.id==leastVotedAnswer.id || op.votes == leastVotedAnswer.votes)?'bg-red-100':'bg-white'):'No answers yet'} grid grid-cols-6`}>
               <div className="col-span-4">{op.text}{" "}</div>
               <div className="w-fit px-1 ml-2 h-8 min-w-8 flex items-center justify-center bg-black/20 shadow-full rounded">
                 {op.votes}
