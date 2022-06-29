@@ -105,7 +105,7 @@ export default function PollAnswerPage({ poll, slug, url }: any) {
           </Link>
         </>
       )}
-      <div className="flex mt-2 items-center justify-center p-2 bg-white mt-3 rounded-xl shadow">
+      {poll&&<div className="flex mt-2 items-center justify-center p-2 bg-white mt-3 rounded-xl shadow">
         <div className="mr-2 max-w-[250px] text-indigo-900 truncate">
           {url}
         </div>
@@ -119,7 +119,7 @@ export default function PollAnswerPage({ poll, slug, url }: any) {
             setTextCopied(true)
           }}
         />
-      </div>
+      </div>}
       {textCopied && (
         <SuccessfulMessageCard className="mt-4">
           Link copied to Clipboard!!
