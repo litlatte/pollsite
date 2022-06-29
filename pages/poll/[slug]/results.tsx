@@ -5,7 +5,7 @@ import { SuccessfulMessageCard } from "../../../components/misc/cards"
 export default function PollPage({ poll, url }: any) {
   if (!poll)
     return (
-      <div className="h-full w-full items-center justify-center">
+      <div className="h-full w-full flex items-center justify-center">
         <div className="text-5xl text-center text-indigo-800">
           Poll Not found
         </div>
