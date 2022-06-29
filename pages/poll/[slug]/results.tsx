@@ -3,6 +3,14 @@ import { useState } from "react"
 import { SuccessfulMessageCard } from "../../../components/misc/cards"
 
 export default function PollPage({ poll, url }: any) {
+  if (!poll)
+    return (
+      <div className="h-full w-full items-center justify-center">
+        <div className="text-5xl text-center text-indigo-800">
+          Poll Not found
+        </div>
+      </div>
+    )
   let mostVotedAnswer = poll.options.reduce((acc: any, ans: any) => {
     if (ans.votes > acc.votes) return ans
     return acc
@@ -12,14 +20,6 @@ export default function PollPage({ poll, url }: any) {
     return acc
   })
   let [textCopied, setTextCopied] = useState(false)
-  if (!poll)
-    return (
-      <div className="h-full w-full items-center justify-center">
-        <div className="text-5xl text-center text-indigo-800">
-          Poll Not found
-        </div>
-      </div>
-    )
   return (
     <div className="w-full bg-indigo-50 h-full flex flex-col items-center justify-center">
       <h1 className="text-5xl mb-8 font-bold text-center text-indigo-600">
