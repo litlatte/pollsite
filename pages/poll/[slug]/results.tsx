@@ -3,7 +3,6 @@ import { useState } from "react"
 import { SuccessfulMessageCard } from "../../../components/misc/cards"
 
 export default function PollPage({ poll, url }: any) {
-  if (!poll) return <div>Unknown Error</div>
   let mostVotedAnswer = poll.options.reduce((acc: any, ans: any) => {
     if (ans.votes > acc.votes) return ans
     return acc
